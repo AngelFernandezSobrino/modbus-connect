@@ -61,39 +61,18 @@ ModbusRegisters = NewType("ModbusRegisters", List[ModbusRegister])
 
 ModbusRegistersBatched = NewType("ModbusRegistersBatched", List[List[ModbusRegister]])
 
+ModbusRegistersGroups = NewType("ModbusRegistersGroups", dict[MemoryBanks, ModbusRegisters])
 
-@dataclass
-class ModbusRegistersGroups:
-    holding_registers: ModbusRegisters = field(default_factory=list)
-    input_registers: ModbusRegisters = field(default_factory=list)
-    discrete_inputs: ModbusRegisters = field(default_factory=list)
-    coils: ModbusRegisters = field(default_factory=list)
-
-ModbusRegistersGroupsV2 = NewType("ModbusRegistersGroupsV2", dict[MemoryBanks, ModbusRegistersGroups])
-
-@dataclass
-class ModbusRegistersGroupsBatched:
-    holding_registers: ModbusRegistersBatched = field(default_factory=list)
-    input_registers: ModbusRegistersBatched = field(default_factory=list)
-    discrete_inputs: ModbusRegistersBatched = field(default_factory=list)
-    coils: ModbusRegistersBatched = field(default_factory=list)
-
+ModbusRegistersGroupsBatched = NewType("ModbusRegistersGroupsBatched", dict[MemoryBanks, ModbusRegistersBatched])
 
 @dataclass
 class ModbusResult:
     register: ModbusRegister
     value: any = None
 
-
 ModbusResults = NewType("ModbusResults", List[ModbusResult])
 
-
-@dataclass
-class ModbusResultsGrups:
-    holding_registers: ModbusResults = field(default_factory=list)
-    input_registers: ModbusResults = field(default_factory=list)
-    discrete_inputs: ModbusResults = field(default_factory=list)
-    coils: ModbusResults = field(default_factory=list)
+ModbusResultsGroups = NewType("ModbusResultsGroups", dict[MemoryBanks, ModbusResults])
 
 
 # --------------------- FUNCTIONS ---------------------
