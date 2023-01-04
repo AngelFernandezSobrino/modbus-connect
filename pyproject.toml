@@ -2,9 +2,17 @@
 name = "modbus-connect"
 version = "0.1.0"
 description = "Modbus TCP data acquisition library"
-authors = ["Ángel Fernández Sobrino fernandezsobrinoangel@gmail.com"]
+authors = ["Ángel Fernández Sobrino <fernandezsobrinoangel@gmail.com>"]
 readme = "README.md"
-packages = [{include = "modbus_gateway"}]
+packages = [{include = "modbus_connect"}]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"GitHub" = "https://github.com/angelfernandezsobrino/modbus-connect"
 
 [tool.poetry.dependencies]
 python = "^3.11"

@@ -12,7 +12,7 @@ import src.modbus_connect.core as core
 import src.modbus_connect.utils as utils
 from src.modbus_connect.utils import ModbusRegister, MemoryBanks, DataTypes
 
-import src.tests.modbus_connect.mock_modbus
+import tests.mock_modbus
 
 
 def test_integration_external():
@@ -21,7 +21,7 @@ def test_integration_external():
 
     # Create modbus server mock
 
-    thread = src.tests.modbus_connect.mock_modbus.run_mock_thread()
+    thread = tests.mock_modbus.run_mock_thread()
 
     # Create modbus gateway
 
