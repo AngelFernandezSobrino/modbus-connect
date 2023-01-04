@@ -5,8 +5,8 @@ import pymodbus.register_read_message
 import pymodbus.bit_read_message
 import pymodbus.constants
 
-import src.modbus_gateway.utils as utils
-from src.modbus_gateway.utils import MemoryBanks, DataTypes
+import src.modbus_connect.utils as utils
+from src.modbus_connect.utils import MemoryBanks, DataTypes
 
 
 def process_batch(

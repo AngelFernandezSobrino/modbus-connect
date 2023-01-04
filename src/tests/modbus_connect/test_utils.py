@@ -2,7 +2,7 @@
 
 # Import gateway module
 
-import src.modbus_gateway.utils as utils
+import src.modbus_connect.utils as utils
 
 
 # Test the get_batch_memory_length function

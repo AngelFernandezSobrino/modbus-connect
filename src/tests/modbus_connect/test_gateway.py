@@ -2,10 +2,10 @@
 
 # Import gateway module
 
-import src.modbus_gateway.core as core
+import src.modbus_connect.core as core
 import pymodbus.constants
-import src.modbus_gateway.utils as utils
-from src.modbus_gateway.utils import MemoryBanks, ModbusRegister, DataTypes
+import src.modbus_connect.utils as utils
+from src.modbus_connect.utils import MemoryBanks, ModbusRegister, DataTypes
 
 
 # Test that ModbusGateway constructor sets the correct values for the attributes

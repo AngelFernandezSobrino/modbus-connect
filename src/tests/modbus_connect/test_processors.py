@@ -4,9 +4,9 @@ import pymodbus.register_read_message
 import pymodbus.bit_read_message
 import pymodbus.constants
 
-import src.modbus_gateway.processors as processors
-import src.modbus_gateway.utils as utils
-from src.modbus_gateway.utils import ModbusRegister, MemoryBanks, DataTypes
+import src.modbus_connect.processors as processors
+import src.modbus_connect.utils as utils
+from src.modbus_connect.utils import ModbusRegister, MemoryBanks, DataTypes
 
 
 def test_process_holding_registers():

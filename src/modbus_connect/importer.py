@@ -1,6 +1,6 @@
 import csv
 
-import src.modbus_gateway.utils as utils
+import src.modbus_connect.utils as utils
 
 
 # Get variable names and memory addresses from csv file, and save them in a list of dictionaries
