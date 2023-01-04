@@ -5,7 +5,7 @@
 import src.modbus_gateway.core as core
 import pymodbus.constants
 import src.modbus_gateway.utils as utils
-from src.modbus_gateway.utils import MemoryBanks, ModbusRegister
+from src.modbus_gateway.utils import MemoryBanks, ModbusRegister, DataTypes
 
 
 # Test that ModbusGateway constructor sets the correct values for the attributes
@@ -62,16 +62,16 @@ def test_modbus_gateway_configure_tags():
     gateway.set_tags_list(
         [
             ModbusRegister(
-                "var1", 0, MemoryBanks.HOLDING_REGISTERS, "float32"
+                "var1", 0, MemoryBanks.HOLDING_REGISTERS, DataTypes.FLOAT32
             ),
             ModbusRegister(
-                "var2", 2, MemoryBanks.HOLDING_REGISTERS, "float32"
+                "var2", 2, MemoryBanks.HOLDING_REGISTERS, DataTypes.FLOAT32
             ),
             ModbusRegister(
-                "var3", 0, MemoryBanks.COILS, "bool"
+                "var3", 0, MemoryBanks.COILS, DataTypes.BOOL
             ),
             ModbusRegister(
-                "var4", 1, MemoryBanks.COILS, "bool"
+                "var4", 1, MemoryBanks.COILS, DataTypes.BOOL
             )
         ]
     )
@@ -82,9 +82,10 @@ def test_modbus_gateway_configure_tags():
 
     # Check tags configuration
 
-    assert len(gateway.tags_requests.holding_registers) == 1
-    assert len(gateway.tags_requests.coils) == 1
-    assert gateway.tags_requests.holding_registers[0][0].name == "var1"
-    assert gateway.tags_requests.holding_registers[0][1].name == "var2"
-    assert gateway.tags_requests.coils[0][0].name == "var3"
-    assert gateway.tags_requests.coils[0][1].name == "var4"
+    assert len(gateway.tags_requests) == 2
+    assert len(gateway.tags_requests[0]) == 2
+    assert len(gateway.tags_requests[1]) == 2
+    assert gateway.tags_requests[1][0].name == "var1"
+    assert gateway.tags_requests[1][1].name == "var2"
+    assert gateway.tags_requests[0][0].name == "var3"
+    assert gateway.tags_requests[0][1].name == "var4"
