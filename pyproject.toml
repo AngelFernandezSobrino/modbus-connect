@@ -31,14 +31,14 @@ pre-commit = "^2.21.0"
 
 [tool.black]
 line-length = 79
-include = '\.pyi?$'
+include = '/.pyi?$'
 exclude = '''
 /(
-    \.git
-  | \.mypy_cache
-  | \.pytest_cache
-  | \.venv
-  | \.dist
+    .git
+  | .mypy_cache
+  | .pytest_cache
+  | .venv
+  | .dist
   | build
   | dist
 )/
