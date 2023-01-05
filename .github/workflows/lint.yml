@@ -10,4 +10,4 @@ jobs:
       - uses: psf/black@stable
         with:
           options: --check --verbose
-          src: test/ modbus_connect/
+          src: tests/ modbus_connect/
