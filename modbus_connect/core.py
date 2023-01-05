@@ -9,8 +9,8 @@ import pymodbus.client.tcp
 import pymodbus.payload
 import pymodbus.constants
 
-import src.modbus_connect.utils as utils
-import src.modbus_connect.processors as processors
+import modbus_connect.utils as utils
+import modbus_connect.processors as processors
 
 
 logger = logging.getLogger()

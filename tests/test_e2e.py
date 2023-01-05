@@ -8,9 +8,9 @@ import pytest
 
 import pymodbus.constants
 
-import src.modbus_connect.core as core
-import src.modbus_connect.utils as utils
-from src.modbus_connect.utils import ModbusRegister, MemoryBanks, DataTypes
+import modbus_connect.core as core
+import modbus_connect.utils as utils
+from modbus_connect.utils import ModbusRegister, MemoryBanks, DataTypes
 
 import tests.mock_modbus
 
