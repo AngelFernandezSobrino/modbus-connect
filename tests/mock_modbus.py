@@ -1,4 +1,3 @@
-
 import logging
 import asyncio
 import time
@@ -46,12 +45,13 @@ def setup_server():
     }
     return setup
 
+
 def run_async_server(setup):
-    print("Starting the server, port: {}".format(setup['port']))
-    address = ("", setup['port']) if setup['port'] else None
+    print("Starting the server, port: {}".format(setup["port"]))
+    address = ("", setup["port"]) if setup["port"] else None
     server = pymodbus.server.async_io.ModbusTcpServer(
-        context=setup['context'],  # Data storage
-        identity=setup['identity'],  # server identify
+        context=setup["context"],  # Data storage
+        identity=setup["identity"],  # server identify
         # TBD host=
         # TBD port=
         address=address,  # listen address
@@ -68,11 +68,12 @@ def run_async_server(setup):
 
     return server
 
+
 def start_mock_server():
     asyncio.set_event_loop(asyncio.new_event_loop())
     setup = setup_server()
     server = run_async_server(setup)
-    
+
     loop = server.loop
     loop.set_debug(True)
     loop.set_exception_handler(lambda loop, context: _logger.error(context))
@@ -85,18 +86,21 @@ def start_mock_server():
 def run_mock_thread():
     import threading
     import time
+
     thread = threading.Thread(target=start_mock_server)
     thread.daemon = True
     thread.start()
     return thread
 
+
 if __name__ == "__main__":
     import threading
     import time
+
     thread = threading.Thread(target=start_mock_server)
     thread.daemon = True
     thread.start()
-    
+
     while True:
         print("Running")
         time.sleep(1)

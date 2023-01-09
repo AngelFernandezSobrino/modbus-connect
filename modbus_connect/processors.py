@@ -33,7 +33,9 @@ def process_batch(
                             tag,
                             batch_results.registers[
                                 tag.address
-                                - batch[0].address : (tag.address - batch[0].address)
+                                - batch[0].address : (
+                                    tag.address - batch[0].address
+                                )
                                 + tag.length
                             ],
                             byte_order,
@@ -53,7 +55,9 @@ def process_batch(
                 values.append(
                     process_bitlike_register(
                         register,
-                        batch_results.getBit(register.address - batch[0].address),
+                        batch_results.getBit(
+                            register.address - batch[0].address
+                        ),
                     )
                 )
 

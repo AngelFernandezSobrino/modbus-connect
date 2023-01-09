@@ -18,6 +18,7 @@ class MemoryBanks(Enum):
     __eq__ = lambda self, other: self.value == other.value
     __gt__ = lambda self, other: self.value > other.value
 
+
 class DataTypes(Enum):
     BOOL = "bool"
     INT16 = "int16"
@@ -28,6 +29,7 @@ class DataTypes(Enum):
     INT64 = "int64"
     UINT64 = "uint64"
     FLOAT64 = "float64"
+
 
 def datatype_lenght(datatype: DataTypes) -> int:
     if datatype == DataTypes.BOOL:
@@ -51,6 +53,7 @@ def datatype_lenght(datatype: DataTypes) -> int:
     else:
         raise ValueError("Datatype not supported")
 
+
 @dataclass
 class ModbusRegister:
     name: str
@@ -66,12 +69,16 @@ class ModbusRegister:
 
 ModbusRegisters = NewType("ModbusRegisters", List[ModbusRegister])
 
-ModbusRegistersBatched = NewType("ModbusRegistersBatched", List[List[ModbusRegister]])
+ModbusRegistersBatched = NewType(
+    "ModbusRegistersBatched", List[List[ModbusRegister]]
+)
+
 
 @dataclass
 class ModbusResult:
     tag: ModbusRegister
     value: any = None
+
 
 ModbusResults = NewType("ModbusResults", List[ModbusResult])
 
@@ -80,8 +87,9 @@ ModbusResults = NewType("ModbusResults", List[ModbusResult])
 
 # Interface to tag classes
 
+
 @dataclass
-class ObjectWithAddressAndBank():
+class ObjectWithAddressAndBank:
     address: int
     memorybank: str
     length: int
@@ -90,6 +98,7 @@ class ObjectWithAddressAndBank():
 # From a list of ObjectWithAddressAndBank classes, return the total lenght in memory addresses cosidering the length of each object
 
 # TODO: Allow the use calculate batches which are not consecutive
+
 
 def get_batch_memory_length(list: List[ObjectWithAddressAndBank]) -> int:
     return sum([tag.length for tag in list])
@@ -100,16 +109,19 @@ def get_batch_memory_length(list: List[ObjectWithAddressAndBank]) -> int:
 
 # TODO: Allow the creation of batches which are not consecutive by an allowed non taged memory space
 
+
 def make_batch_consecutive_bank_and_size(
     list: List[ObjectWithAddressAndBank],
     size: int,
 ) -> List[List]:
     # Check if size is greater than 2 to be able to make batches
     if size < 2:
-        raise ValueError("Is not possible to make batches with a size less than 2")
+        raise ValueError(
+            "Is not possible to make batches with a size less than 2"
+        )
 
     # Sort the list by address and memorybank
-    list.sort(key=lambda x: x.address) 
+    list.sort(key=lambda x: x.address)
     list.sort(key=lambda x: x.memorybank)
 
     parts: List[List] = []
@@ -122,11 +134,14 @@ def make_batch_consecutive_bank_and_size(
 
     parts.append([list[0]])
     for i in range(1, len(list)):
-
         # Check that the address is not consecutive or the memorybank is not the same or if the batch is full, if so, create a new batch
-        if list[i].address != list[i - 1].address + list[i - 1].length or list[i].memorybank != list[i - 1].memorybank or len(parts[-1]) >= size:
+        if (
+            list[i].address != list[i - 1].address + list[i - 1].length
+            or list[i].memorybank != list[i - 1].memorybank
+            or len(parts[-1]) >= size
+        ):
             parts.append([list[i]])
-        
+
         # Otherwise, add the element to the last batch
         else:
             parts[-1].append(list[i])

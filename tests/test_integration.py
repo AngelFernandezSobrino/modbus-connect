@@ -36,11 +36,7 @@ def test_modbus_gateway_set_tags_list():
     # Set tags list
 
     gateway.set_tags_list(
-        [
-            ModbusRegister(
-                "var1", 0, MemoryBanks.HOLDING_REGISTERS, "float32"
-            )
-        ]
+        [ModbusRegister("var1", 0, MemoryBanks.HOLDING_REGISTERS, "float32")]
     )
 
     # Check tags list
@@ -67,12 +63,8 @@ def test_modbus_gateway_configure_tags():
             ModbusRegister(
                 "var2", 2, MemoryBanks.HOLDING_REGISTERS, DataTypes.FLOAT32
             ),
-            ModbusRegister(
-                "var3", 0, MemoryBanks.COILS, DataTypes.BOOL
-            ),
-            ModbusRegister(
-                "var4", 1, MemoryBanks.COILS, DataTypes.BOOL
-            )
+            ModbusRegister("var3", 0, MemoryBanks.COILS, DataTypes.BOOL),
+            ModbusRegister("var4", 1, MemoryBanks.COILS, DataTypes.BOOL),
         ]
     )
 

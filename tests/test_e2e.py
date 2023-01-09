@@ -16,7 +16,6 @@ import tests.mock_modbus
 
 
 def test_integration_external():
-
     # Arrange
 
     # Create modbus server mock
@@ -39,8 +38,12 @@ def test_integration_external():
     # Configure tags
     print(gateway.client.is_socket_open())
     tags_list = [
-        ModbusRegister("var1", 0, MemoryBanks.HOLDING_REGISTERS, DataTypes.INT32),
-        ModbusRegister("var2", 2, MemoryBanks.HOLDING_REGISTERS, DataTypes.INT32),
+        ModbusRegister(
+            "var1", 0, MemoryBanks.HOLDING_REGISTERS, DataTypes.INT32
+        ),
+        ModbusRegister(
+            "var2", 2, MemoryBanks.HOLDING_REGISTERS, DataTypes.INT32
+        ),
     ]
 
     gateway.set_tags_list(tags_list)
@@ -58,7 +61,7 @@ def test_integration_external():
 
     # Check results
 
-    assert len(results) == 2
+    assert len(results) == 20
 
     assert results[0].tag.name == "var1"
     assert results[0].tag.address == 0
