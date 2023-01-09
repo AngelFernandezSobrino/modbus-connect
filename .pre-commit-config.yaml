@@ -1,5 +1,8 @@
 repos:
--   repo: https://github.com/psf/black
-    rev: stable
+  - repo: local
     hooks:
-    - id: black
+      - id: pre-commit-script
+        name: pre-commit-script
+        entry: pre-commit.sh
+        language: script
+        pass_filenames: false
