@@ -17,6 +17,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.11"
 pymodbus = "^3.0.2"
+pytest-html = "^3.2.0"
 
 
 [tool.poetry.group.dev.dependencies]

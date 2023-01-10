@@ -32,8 +32,21 @@ jobs:
 
       - name: Test with pytest
         run: |
-          poetry run pytest
+          poetry run pytest --junitxml=reports/tests/${{ matrix.python-version }}.xml --html=reports/tests/${{ matrix.python-version }}.html --cov-report xml:reports/coverage/${{ matrix.python-version }}.xml --cov-report html:reports/coverage/${{ matrix.python-version }} --cov=modbus_connect tests/
 
       - name: Execute safety
         run: |
           poetry run safety check
+
+      - name: Generate badges
+        run: |
+          poetry run genbadge tests -i ./reports/tests/${{ matrix.python-version }}.xml -o ./badges/tests/${{ matrix.python-version }}.svg
+          poetry run genbadge coverage -i ./reports/coverage/${{ matrix.python-version }}.xml -o ./badges/coverage/${{ matrix.python-version }}.svg
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports-${{ matrix.python-version }}
+          path: reports
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
