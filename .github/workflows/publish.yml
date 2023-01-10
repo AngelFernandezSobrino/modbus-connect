@@ -3,7 +3,7 @@ name: Registry Publish
 on:
   push:
     tags:
-      - "**"
+      - "**.**.**"
 
 jobs:
   deploy:
