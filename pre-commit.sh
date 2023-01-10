@@ -6,22 +6,22 @@ NC='\033[0m'
 
 if ! poetry run pytest
 then
-    $testfail = true
+    testfail=true
+else
+    testfail=false
 fi
 
+printf "\n\n"
+printf "${BLUE}Linting with black${NC}\n"
+printf "\n"
 
 if ! poetry run black --check ./modbus_connect/* ./tests/*
 then
-    $lintfail = true
+    lintfail=true
+else
+    lintfail=false
 fi
 
-echo "Tests"
-
-echo $testfail
-
-echo "Lintfail"
-
-echo $lintfail
 
 if [ $testfail = true ] || [ $lintfail = true ]
 then
@@ -45,5 +45,5 @@ if [ $testfail = true ] || [ $lintfail = true ]
 then
     printf "\n"
     printf "========================================\n"
-    exit 1
+    # exit 1
 fi

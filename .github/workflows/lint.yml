@@ -34,11 +34,6 @@ jobs:
         run: |
           poetry run pytest
 
-      - name: Remove dev dependencies
-        run: |
-          poetry env remove --all
-          poetry install --without dev
-
       - name: Execute safety
         run: |
           poetry run safety check
