@@ -1,13 +1,44 @@
-name: Lint
+name: CI
 
 on: [push, pull_request]
 
 jobs:
-  lint:
+  CI:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+        poetry-version: ["1.3.1"]
     steps:
-      - uses: actions/checkout@v2
-      - uses: psf/black@stable
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
         with:
-          options: --check --verbose
-          src: tests/ modbus_connect/
+          python-version: ${{ matrix.python-version }}
+
+      - name: Setup Poetry ${{ matrix.poetry-version }}1
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Check source with black
+        run: |
+          poetry run black --check ./modbus_connect/* ./tests/*
+
+      - name: Test with pytest
+        run: |
+          poetry run pytest
+
+      - name: Remove dev dependencies
+        run: |
+          poetry env remove --all
+          poetry install --without dev
+
+      - name: Execute safety
+        run: |
+          poetry run safety check
