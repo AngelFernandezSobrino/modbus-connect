@@ -1,10 +1,12 @@
-name: CI
+name: Continous Integration
 
 on:
   push:
     tags-ignore:
       - "**"
   pull_request:
+  
+  workflow_call:
 
 jobs:
   CI:
