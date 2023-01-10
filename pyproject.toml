@@ -4,11 +4,11 @@ version = "0.1.0"
 description = "Modbus TCP data acquisition library"
 authors = ["Ángel Fernández Sobrino <fernandezsobrinoangel@gmail.com>"]
 readme = "README.md"
-packages = [{include = "modbus_connect"}]
+packages = [{ include = "modbus_connect" }]
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
 ]
 
 [project.urls]
@@ -22,10 +22,13 @@ pymodbus = "^3.0.2"
 pytest = "^7.2.0"
 pytest-cov = "^4.0.0"
 pytest-html = "^3.2.0"
-safety = "^2.3.5"
-black = {version = "^23.1a1", allow-prereleases = true}
+black = { version = "^23.1a1", allow-prereleases = true }
 pre-commit = "^2.21.0"
-genbadge = {extras = ["all"], version = "^1.1.0"}
+genbadge = { extras = ["all"], version = "^1.1.0" }
+
+
+[tool.poetry.group.build.dependencies]
+safety = "^2.3.5"
 
 [tool.black]
 line-length = 79
@@ -45,4 +48,3 @@ exclude = '''
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
