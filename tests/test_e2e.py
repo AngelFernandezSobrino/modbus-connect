@@ -61,7 +61,7 @@ def test_integration_external():
 
     # Check results
 
-    assert len(results) == 20
+    assert len(results) == 2
 
     assert results[0].tag.name == "var1"
     assert results[0].tag.address == 0

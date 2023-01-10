@@ -6,38 +6,42 @@ NC='\033[0m'
 
 if ! poetry run pytest
 then
-    $testfail = 1
-else
-    $testfail = 0
+    $testfail = true
 fi
 
 
 if ! poetry run black --check ./modbus_connect/* ./tests/*
 then
-    $lintfail = 1
-else
-    $lintfail = 0
+    $lintfail = true
 fi
 
-if $testfail || $lintfail
+echo "Tests"
+
+echo $testfail
+
+echo "Lintfail"
+
+echo $lintfail
+
+if [ $testfail = true ] || [ $lintfail = true ]
 then
     printf "\n"
     printf "================ HELP ==================\n"
 fi
 
-if $testfail
+if [ $testfail = true ]
 then
     printf "\n"
     printf "${RED}Tests not passing, check commit${NC}\n"
 fi
 
-if $lintfail
+if [ $lintfail = true ]
 then
     printf "\n"
     printf "${RED}Reformat code${NC} with ${BLUE}poetry run black ./modbus_connect/* ./tests/* ${NC}\n"
 fi
 
-if $testfail || $lintfail
+if [ $testfail = true ] || [ $lintfail = true ]
 then
     printf "\n"
     printf "========================================\n"
