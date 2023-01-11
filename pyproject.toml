@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "modbus-connect"
-version = "0.1.1"
+version = "0.1.2"
 description = "Modbus TCP data acquisition library"
 authors = ["Ángel Fernández Sobrino <fernandezsobrinoangel@gmail.com>"]
 readme = "README.md"
