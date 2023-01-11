@@ -1,8 +1,12 @@
 # Modbus Connect package for Python
 
-<a href="https://angelfernandezsobrino.github.io/modbus-connect/badges/tests/3.11.svg" alt="Tests">
+<a href="https://angelfernandezsobrino.github.io/modbus-connect/reports/tests/3.11.html" alt="Tests">
     <img src="https://angelfernandezsobrino.github.io/modbus-connect/badges/tests/3.11.svg">
 </a>
+<a href="https://angelfernandezsobrino.github.io/modbus-connect/reports/coverage/3.11/index.html" alt="Tests">
+    <img src="https://angelfernandezsobrino.github.io/modbus-connect/badges/coverage/3.11.svg">
+</a>
+
 
 Modbus Connect is a Python package that provides a configurable Modbus TCP data adquisition library from Modbus TCP devices. It is designed to be used as a library for a data acquisition application, managing the connection to the devices and the data exchange with them. The data is returned in a format that can be easily used for sending to a database or MQTT broker.
 
