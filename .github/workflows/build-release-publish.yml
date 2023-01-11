@@ -45,10 +45,17 @@ jobs:
         run: |
           poetry build
 
-      - name: Publish a Python distribution to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Download reposts and badges artifact
+        uses: actions/download-artifact@master
         with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          name: reports-${{ matrix.python-version }}.zip
+          path: reports/
+
+      - name: Download reposts and badges artifact
+        uses: actions/download-artifact@master
+        with:
+          name: badges-${{ matrix.python-version }}.zip
+          path: badges/
 
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
@@ -56,5 +63,10 @@ jobs:
           allowUpdates: true
           artifactErrorsFailBuild: true
           artifacts: |
-            reports
-            badges
+            reports-${{ matrix.python-version }}
+            badges-${{ matrix.python-version }}
+
+      - name: Publish a Python distribution to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
