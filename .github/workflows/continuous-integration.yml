@@ -7,63 +7,11 @@ on:
     branches:
       - "**"
   pull_request:
-  workflow_call:
 
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  CI:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.11"]
-        poetry-version: ["1.3.1"]
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Poetry ${{ matrix.poetry-version }}1
-        uses: abatilo/actions-poetry@v2
-        with:
-          poetry-version: ${{ matrix.poetry-version }}
-
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: "poetry"
-
-      - name: Install dependencies
-        run: |
-          poetry install
-
-      - name: Check source with black
-        run: |
-          poetry run black --check ./modbus_connect/* ./tests/*
-
-      - name: Test with pytest
-        run: |
-          poetry run pytest --junitxml=reports/tests/${{ matrix.python-version }}.xml --html=reports/tests/${{ matrix.python-version }}.html --cov-report xml:reports/coverage/${{ matrix.python-version }}.xml --cov-report html:reports/coverage/${{ matrix.python-version }} --cov=modbus_connect tests/
-
-      - name: Generate badges
-        run: |
-          poetry run genbadge tests -i ./reports/tests/${{ matrix.python-version }}.xml -o ./badges/tests/${{ matrix.python-version }}.svg
-          poetry run genbadge coverage -i ./reports/coverage/${{ matrix.python-version }}.xml -o ./badges/coverage/${{ matrix.python-version }}.svg
-        if: ${{ always() }}
-
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        with:
-          name: reports-${{ matrix.python-version }}
-          path: reports
-        # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
-
-      - name: Upload badges
-        uses: actions/upload-artifact@v3
-        with:
-          name: badges-${{ matrix.python-version }}
-          path: badges
-        # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
+  continuous-integration:
+    uses: ./.github/workflows/lint-test.yml
