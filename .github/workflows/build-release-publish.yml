@@ -1,4 +1,4 @@
-name: Registry Publish
+name: Build, Release and Publish
 
 on:
   push:
@@ -10,7 +10,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish:
+  continous-integration:
+    uses: ./.github/workflows/continuous-integration.yml
+
+  build-and-publish:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -18,9 +21,6 @@ jobs:
         poetry-version: ["1.3.1"]
     steps:
       - uses: actions/checkout@v3
-
-      - name: Call CI workflow
-        uses: ./.github/workflows/ci.yml
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
