@@ -121,30 +121,3 @@ class ModbusGateway:
 
     def tags_ready(self) -> bool:
         return len(self.tags) > 0
-
-
-if __name__ == "__main__":
-    # Create a ModbusGateway object, using the host and port parameters, and the tags_list parameter, which is a list of dictionaries with the variable names and memory addresses
-    gateway = ModbusGateway(
-        host="docencia.i4techlab.upc.edu",
-        port=20000,
-        tags_list=[
-            {
-                "name": "var1",
-                "address": 0,
-                "memory_bank": utils.MemoryBanks.HOLDING_REGISTERS,
-                "datatype": "float32",
-            },
-            {
-                "name": "var2",
-                "address": 1,
-                "memory_bank": utils.MemoryBanks.HOLDING_REGISTERS,
-                "datatype": "float32",
-            },
-        ],
-    )
-
-    # Read the values from the modbus server
-    values = gateway.read_tags()
-    print(values)
-    logger.info(values)

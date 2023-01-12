@@ -31,6 +31,8 @@ For a complete example of the usage of the package, check the examples folder.
 
 Here is a simple example of the usage of the package:
 
+TODO: Non working example, UPDATE
+
 ```python
 from modbus_gateway import ModbusGateway
 
@@ -84,37 +86,42 @@ poetry install
 ```
 Add `-without dev` to the command to install only build and production dependencies.
 
-To format the code usign black, use:
+To format and tests the code, use:
 
 ```bash
 poetry run black ./modbus_connect/* ./tests/*
-```
 
-To run the tests, use:
-
-```bash
 poetry run pytest tests/
 ```
-
-To get the reports of the tests, that would be shown on release, use:
-
-```bash
-poetry run pytest --junitxml=reports/tests/${{ matrix.python-version }}.xml --html=reports/tests/${{ matrix.python-version }}.html --cov-report xml:reports/coverage/${{ matrix.python-version }}.xml --cov-report html:reports/coverage/${{ matrix.python-version }} --cov=modbus_connect tests/
-```
-
-Reports are generated in the reports folder.
 
 Pre-commit hooks are used to ensure that the code is properly formated and tested before commiting. To install the pre-commit hooks, run:
 
 ```bash
 poetry run pre-commit install
+
+# Check hooks before commit
+poetry run pre-commit
 ```
-To avoid commits without formating or failing tests. To void 
 
-Coverage and reports can also be triggered, check [lint-test action](./.github/workflows/lint-test.yml) for more details about the commands to use.
+The pre-commit hooks can be skipped using the --no-verify flag on commit (NOT RECOMMENDED, use black before creating any commit) or the env variable SKIP with the hook id (for temporal commit which don't pass all tests).
 
+```bash
+# Skip tests on commit
+SKIP=tests poetry run git commit -m "Commit message"
+```
 
+Coverage, reports and badges can also be built, check [lint-test action](./.github/workflows/lint-test.yml) for more details about the commands to use. Reports are generated in the reports folder, use:
 
+```bash
+poetry run pytest --junitxml=reports/tests/tests.xml --html=reports/tests/tests.html --cov-report xml:reports/coverage/coverage.xml --cov-report html:reports/coverage/coverage --cov=modbus_connect tests/
+```
+
+## TODO
+
+- Create docs
+- Implement TDD importer for csv at least
+- Create examples folder
+- Right now the only examples available are inside the tests.
 
 ## Authors
 
