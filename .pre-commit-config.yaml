@@ -1,8 +1,16 @@
 repos:
   - repo: local
     hooks:
-      - id: pre-commit-script
-        name: pre-commit-script
-        entry: pre-commit.sh
+      - id: tests
+        name: tests
+        entry: .pre-commit/check-tests.sh
         language: script
         pass_filenames: false
+  - repo: local
+    hooks:
+      - id: lint
+        name: lint
+        entry: .pre-commit/check-lint.sh
+        language: script
+        pass_filenames: false
+

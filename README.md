@@ -22,7 +22,7 @@ The [modbus-mqtt-digital-twin]() package provides a data acquisition application
 The package can be installed from PyPI:
 
 ```bash
-pip install modbus
+pip install modbus-connect
 ```
 
 ## Usage
@@ -74,6 +74,47 @@ This behaviour can be easly used for continuous data adquisition using rocktry o
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
+
+### Framework
+
+This project uses [Poetry](https://python-poetry.org/) for dependency management and packaging. To install the dependencies, run:
+
+```bash
+poetry install
+```
+Add `-without dev` to the command to install only build and production dependencies.
+
+To format the code usign black, use:
+
+```bash
+poetry run black ./modbus_connect/* ./tests/*
+```
+
+To run the tests, use:
+
+```bash
+poetry run pytest tests/
+```
+
+To get the reports of the tests, that would be shown on release, use:
+
+```bash
+poetry run pytest --junitxml=reports/tests/${{ matrix.python-version }}.xml --html=reports/tests/${{ matrix.python-version }}.html --cov-report xml:reports/coverage/${{ matrix.python-version }}.xml --cov-report html:reports/coverage/${{ matrix.python-version }} --cov=modbus_connect tests/
+```
+
+Reports are generated in the reports folder.
+
+Pre-commit hooks are used to ensure that the code is properly formated and tested before commiting. To install the pre-commit hooks, run:
+
+```bash
+poetry run pre-commit install
+```
+To avoid commits without formating or failing tests. To void 
+
+Coverage and reports can also be triggered, check [lint-test action](./.github/workflows/lint-test.yml) for more details about the commands to use.
+
+
+
 
 ## Authors
 
