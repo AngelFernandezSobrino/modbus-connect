@@ -1,71 +1,94 @@
-from typing import List
+from typing import List, Protocol
 
 import pymodbus.payload
 import pymodbus.register_read_message
 import pymodbus.bit_read_message
 import pymodbus.constants
 
-import modbus_connect.utils as utils
-from modbus_connect.utils import MemoryBanks, DataTypes
+import modbus_connect.tags as tags
+from modbus_connect.tags import MemoryTypes, DataTypes
+
+
+class RegisterResponse(Protocol):
+    def getBit(self, address: int) -> bool:
+        ...
+
+    @property
+    def registers(self) -> list[int]:
+        ...
 
 
 def process_batch(
-    batch: utils.ModbusRegisters,
-    batch_results: pymodbus.register_read_message.ReadHoldingRegistersResponse
-    or pymodbus.bit_read_message.ReadCoilsResponse,
+    batch: tags.Batch,
+    batch_results: RegisterResponse,
     byte_order: pymodbus.constants.Endian,
     word_order: pymodbus.constants.Endian,
-) -> utils.ModbusResults:
-    # Initialize the list of results
-    values: utils.ModbusResults = []
+) -> tags.Results:
+    values: tags.Results = []
 
     # Check the memory bank of the first register in the batch to determine the processing function between word like or bit like, for each register in the batch, process the register and append the result to the list of results
-    if batch[0].memorybank == utils.MemoryBanks.HOLDING_REGISTERS:
-        for tag in batch:
-            if (
-                tag.memorybank == utils.MemoryBanks.HOLDING_REGISTERS
-                or tag.memorybank == utils.MemoryBanks.INPUT_REGISTERS
-            ):
-                values.append(
-                    utils.ModbusResult(
-                        tag,
-                        process_wordlike_register(
-                            tag,
-                            batch_results.registers[
-                                tag.address
-                                - batch[0].address : (
-                                    tag.address - batch[0].address
-                                )
-                                + tag.length
-                            ],
-                            byte_order,
-                            word_order,
-                        ),
-                    )
-                )
+    if batch[0].memorytype == tags.MemoryTypes.HOLDING_REGISTERS:
+        process_registers_batch(
+            batch, batch_results, byte_order, word_order, values
+        )
     elif (
-        batch[0].memorybank == utils.MemoryBanks.COILS
-        or batch[0].memorybank == utils.MemoryBanks.DISCRETE_INPUTS
+        batch[0].memorytype == tags.MemoryTypes.COILS
+        or batch[0].memorytype == tags.MemoryTypes.DISCRETE_INPUTS
     ):
-        for register in batch:
-            if (
-                register.memorybank == utils.MemoryBanks.COILS
-                or register.memorybank == utils.MemoryBanks.DISCRETE_INPUTS
-            ):
-                values.append(
-                    process_bitlike_register(
-                        register,
-                        batch_results.getBit(
-                            register.address - batch[0].address
-                        ),
-                    )
-                )
+        process_bits_batch(batch, batch_results, values)
 
     return values
 
 
+def process_bits_batch(
+    batch: tags.Batch, batch_results: RegisterResponse, values: tags.Results
+):
+    for tag in batch:
+        if (
+            tag.memorytype == tags.MemoryTypes.COILS
+            or tag.memorytype == tags.MemoryTypes.DISCRETE_INPUTS
+        ):
+            values.append(
+                process_bitlike_register(
+                    tag,
+                    batch_results.getBit(tag.address - batch[0].address),
+                )
+            )
+
+
+def process_registers_batch(
+    batch: tags.Batch,
+    batch_results: RegisterResponse,
+    byte_order,
+    word_order,
+    values: tags.Results,
+):
+    for tag in batch:
+        if (
+            tag.memorytype == tags.MemoryTypes.HOLDING_REGISTERS
+            or tag.memorytype == tags.MemoryTypes.INPUT_REGISTERS
+        ):
+            values.append(
+                tags.Result(
+                    tag,
+                    process_wordlike_register(
+                        tag,
+                        batch_results.registers[
+                            tag.address
+                            - batch[0].address : (
+                                tag.address - batch[0].address
+                            )
+                            + tag.length
+                        ],
+                        byte_order,
+                        word_order,
+                    ),
+                )
+            )
+
+
 def process_wordlike_register(
-    tag: utils.ModbusRegister,
+    tag: tags.Tag,
     registers_list: list[int],
     byte_order: pymodbus.constants.Endian,
     word_order: pymodbus.constants.Endian,
@@ -92,13 +115,13 @@ def process_wordlike_register(
 
 
 def process_bitlike_register(
-    tag: utils.ModbusRegister,
+    tag: tags.Tag,
     register: any,
 ):
     value = None
 
     if tag.datatype == DataTypes.BOOL:
-        value = utils.ModbusResult(tag, bool(register))
+        value = tags.Result(tag, bool(register))
 
     else:
         raise ValueError("Invalid datatype: " + tag["datatype"])
