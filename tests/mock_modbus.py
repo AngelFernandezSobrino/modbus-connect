@@ -8,10 +8,6 @@ from pymodbus.datastore import (
     ModbusSlaveContext,
 )
 from pymodbus.device import ModbusDeviceIdentification
-
-# --------------------------------------------------------------------------- #
-# import the various client implementations
-# --------------------------------------------------------------------------- #
 import pymodbus.server.async_io
 from pymodbus.version import version
 
@@ -19,7 +15,7 @@ from pymodbus.version import version
 _logger = logging.getLogger()
 
 
-def setup_server():
+def setup_server(port):
     datablock = ModbusSequentialDataBlock.create()
     datablock.setValues(0, [0, 4, 0, 8])
     context = ModbusSlaveContext(
@@ -28,7 +24,7 @@ def setup_server():
     single = True
 
     setup = {
-        "port": 5020,
+        "port": port,
         "comm": "tcp",
         "framer": "socket",
         "context": ModbusServerContext(slaves=context, single=single),
@@ -69,9 +65,9 @@ def run_async_server(setup):
     return server
 
 
-def start_mock_server():
+def start_mock_server(port):
     asyncio.set_event_loop(asyncio.new_event_loop())
-    setup = setup_server()
+    setup = setup_server(port)
     server = run_async_server(setup)
 
     loop = server.loop
@@ -83,24 +79,20 @@ def start_mock_server():
     print("Server started", flush=True)
 
 
-def run_mock_thread():
+def run_mock_thread(port):
     import threading
     import time
 
-    thread = threading.Thread(target=start_mock_server)
+    thread = threading.Thread(target=start_mock_server, args=(port, ))
     thread.daemon = True
     thread.start()
     return thread
 
+def get_free_port():
+    import socket
+    s = socket.socket(socket.AF_INET, type=socket.SOCK_STREAM)
+    s.bind(("", 0))
+    port = s.getsockname()[1]
+    s.close()
+    return port
 
-if __name__ == "__main__":
-    import threading
-    import time
-
-    thread = threading.Thread(target=start_mock_server)
-    thread.daemon = True
-    thread.start()
-
-    while True:
-        print("Running")
-        time.sleep(1)
