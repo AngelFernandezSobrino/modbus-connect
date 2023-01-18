@@ -5,19 +5,19 @@ import pymodbus.bit_read_message
 import pymodbus.constants
 
 import modbus_connect.processors as processors
-import modbus_connect.utils as utils
-from modbus_connect.utils import ModbusRegister, MemoryBanks, DataTypes
+import modbus_connect.tags as tags
+from modbus_connect.tags import Tag, MemoryTypes, DataTypes
 
 
 def test_process_holding_registers():
-    batch = [
-        ModbusRegister(
-            "var1", 0, MemoryBanks.HOLDING_REGISTERS, DataTypes.INT32
+    batch = tags.Batch([
+        Tag(
+            "var1", 0, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32
         ),
-        ModbusRegister(
-            "var2", 2, MemoryBanks.HOLDING_REGISTERS, DataTypes.INT32
+        Tag(
+            "var2", 2, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32
         ),
-    ]
+    ])
 
     batch_results = (
         pymodbus.register_read_message.ReadHoldingRegistersResponse(
@@ -37,7 +37,7 @@ def test_process_holding_registers():
     assert len(results) == len(batch)
     assert results[0].tag.name == batch[0].name
     assert results[0].tag.address == batch[0].address
-    assert results[0].tag.memorybank == batch[0].memorybank
+    assert results[0].tag.memorytype == batch[0].memorytype
     assert results[0].tag.datatype == batch[0].datatype
     assert (
         results[0].value
@@ -46,10 +46,10 @@ def test_process_holding_registers():
 
 
 def test_process_coils_registers():
-    batch = [
-        ModbusRegister("var1", 0, MemoryBanks.COILS, DataTypes.BOOL),
-        ModbusRegister("var2", 1, MemoryBanks.COILS, DataTypes.BOOL),
-    ]
+    batch = tags.Batch([
+        Tag("var1", 0, MemoryTypes.COILS, DataTypes.BOOL),
+        Tag("var2", 1, MemoryTypes.COILS, DataTypes.BOOL),
+    ])
 
     batch_results = pymodbus.bit_read_message.ReadCoilsResponse([True, False])
 
@@ -63,7 +63,7 @@ def test_process_coils_registers():
     assert len(results) == len(batch)
     assert results[0].tag.name == batch[0].name
     assert results[0].tag.address == batch[0].address
-    assert results[0].tag.memorybank == batch[0].memorybank
+    assert results[0].tag.memorytype == batch[0].memorytype
     assert results[0].tag.datatype == batch[0].datatype
     assert results[0].value == batch_results.bits[0]
 

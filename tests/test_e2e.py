@@ -8,9 +8,9 @@ import pytest
 
 import pymodbus.constants
 
-import modbus_connect.core as core
-import modbus_connect.utils as utils
-from modbus_connect.utils import ModbusRegister, MemoryBanks, DataTypes
+import modbus_connect.connect as connect
+import modbus_connect.tags as tags
+from modbus_connect.tags import Tag, MemoryTypes, DataTypes
 
 import tests.mock_modbus
 
@@ -24,10 +24,10 @@ def test_integration_external():
 
     # Create modbus gateway
 
-    gateway = core.ModbusGateway("localhost", 5020)
+    gateway = connect.ModbusConnector("localhost", 5020)
 
     try:
-        while not gateway.client.is_socket_open():
+        while not gateway.connected:
             print("Trying to connect...")
             time.sleep(1)
             gateway.connect()
@@ -36,17 +36,17 @@ def test_integration_external():
         print(e)
 
     # Configure tags
-    print(gateway.client.is_socket_open())
+    print(gateway.connected)
     tags_list = [
-        ModbusRegister(
-            "var1", 0, MemoryBanks.HOLDING_REGISTERS, DataTypes.INT32
+        Tag(
+            "var1", 0, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32
         ),
-        ModbusRegister(
-            "var2", 2, MemoryBanks.HOLDING_REGISTERS, DataTypes.INT32
+        Tag(
+            "var2", 2, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32
         ),
     ]
 
-    gateway.set_tags_list(tags_list)
+    gateway.set_tags(tags_list)
 
     # Act
 
