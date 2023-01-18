@@ -1,6 +1,6 @@
 import csv
 
-import modbus_connect.utils as utils
+import modbus_connect.tags as tags
 
 
 # Get variable names and memory addresses from csv file, and save them in a list of dictionaries
@@ -11,7 +11,7 @@ def load_tags_from_list(
     address_row: int,
     memory_row: int,
     datatype_row: int,
-) -> list[utils.ModbusRegister]:
+) -> list[tags.Tag]:
     tags = []
     try:
         with open(directory + filename, "r") as file:
