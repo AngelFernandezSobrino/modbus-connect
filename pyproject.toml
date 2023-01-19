@@ -11,9 +11,6 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 
-[project.urls]
-"GitHub" = "https://github.com/angelfernandezsobrino/modbus-connect"
-
 [tool.poetry.dependencies]
 python = "^3.11"
 pymodbus = "^3.0.2"
@@ -25,10 +22,15 @@ pytest-html = "^3.2.0"
 black = { version = "^23.1a1", allow-prereleases = true }
 pre-commit = "^2.21.0"
 genbadge = { extras = ["all"], version = "^1.1.0" }
+poethepoet = "^0.18.1"
 
 
 [tool.poetry.group.build.dependencies]
 safety = "^2.3.5"
+
+[tool.poe.tasks]
+tests = "poetry run pytest"
+lint = "poetry run black ./modbus_connect/* ./tests/*"
 
 [tool.black]
 line-length = 79
