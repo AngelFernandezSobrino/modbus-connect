@@ -24,6 +24,7 @@ class ModbusConfig:
     reconnect_timeout: int = 3
     retryes: int = 3
 
+
 class ModbusClient:
     def __init__(
         self,

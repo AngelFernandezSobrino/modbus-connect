@@ -10,14 +10,12 @@ from modbus_connect.tags import Tag, MemoryTypes, DataTypes
 
 
 def test_process_holding_registers():
-    batch = tags.Batch([
-        Tag(
-            "var1", 0, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32
-        ),
-        Tag(
-            "var2", 2, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32
-        ),
-    ])
+    batch = tags.Batch(
+        [
+            Tag("var1", 0, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32),
+            Tag("var2", 2, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32),
+        ]
+    )
 
     batch_results = (
         pymodbus.register_read_message.ReadHoldingRegistersResponse(
@@ -46,10 +44,12 @@ def test_process_holding_registers():
 
 
 def test_process_coils_registers():
-    batch = tags.Batch([
-        Tag("var1", 0, MemoryTypes.COILS, DataTypes.BOOL),
-        Tag("var2", 1, MemoryTypes.COILS, DataTypes.BOOL),
-    ])
+    batch = tags.Batch(
+        [
+            Tag("var1", 0, MemoryTypes.COILS, DataTypes.BOOL),
+            Tag("var2", 1, MemoryTypes.COILS, DataTypes.BOOL),
+        ]
+    )
 
     batch_results = pymodbus.bit_read_message.ReadCoilsResponse([True, False])
 

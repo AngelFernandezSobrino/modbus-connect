@@ -33,6 +33,7 @@ def test_data_types_enum_data_length():
 
 # Test tag class returns correct length
 
+
 def test_tag_class_returns_correct_length():
     tag = tags.Tag(
         "test_tag", 0, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32
@@ -43,22 +44,82 @@ def test_tag_class_returns_correct_length():
 
 # Test tag class creates correct batches
 
-def test_tag_class_batches():
 
+def test_tag_class_batches():
     # Arrange
     tags_list = [
-        tags.Tag("test_tag1", 0, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
-        tags.Tag("test_tag2", 2, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
-        tags.Tag("test_tag3", 4, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT16),
-        tags.Tag("test_tag4", 5, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
-        tags.Tag("test_tag5", 7, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
-        tags.Tag("test_tag6", 9, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT16),
-        tags.Tag("test_tag7", 10, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT16),
-        tags.Tag("test_tag8", 11, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
-        tags.Tag("test_tag9", 100, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
-        tags.Tag("test_tag10", 102, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
-        tags.Tag("test_tag11", 104, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
-        tags.Tag("test_tag12", 106, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32)
+        tags.Tag(
+            "test_tag1",
+            0,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
+        tags.Tag(
+            "test_tag2",
+            2,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
+        tags.Tag(
+            "test_tag3",
+            4,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT16,
+        ),
+        tags.Tag(
+            "test_tag4",
+            5,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
+        tags.Tag(
+            "test_tag5",
+            7,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
+        tags.Tag(
+            "test_tag6",
+            9,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT16,
+        ),
+        tags.Tag(
+            "test_tag7",
+            10,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT16,
+        ),
+        tags.Tag(
+            "test_tag8",
+            11,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
+        tags.Tag(
+            "test_tag9",
+            100,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
+        tags.Tag(
+            "test_tag10",
+            102,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
+        tags.Tag(
+            "test_tag11",
+            104,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
+        tags.Tag(
+            "test_tag12",
+            106,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
     ]
 
     # Act
@@ -72,14 +133,34 @@ def test_tag_class_batches():
 
 # Test Batch class returns correct modbus address length for batch
 
-def test_batch_class_returns_correct_modbus_address_length_for_batch():
 
+def test_batch_class_returns_correct_modbus_address_length_for_batch():
     # Arrange
     tags_list = [
-        tags.Tag("test_tag1", 0, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
-        tags.Tag("test_tag2", 2, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
-        tags.Tag("test_tag3", 4, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT16),
-        tags.Tag("test_tag4", 5, tags.MemoryTypes.HOLDING_REGISTERS, tags.DataTypes.INT32),
+        tags.Tag(
+            "test_tag1",
+            0,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
+        tags.Tag(
+            "test_tag2",
+            2,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
+        tags.Tag(
+            "test_tag3",
+            4,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT16,
+        ),
+        tags.Tag(
+            "test_tag4",
+            5,
+            tags.MemoryTypes.HOLDING_REGISTERS,
+            tags.DataTypes.INT32,
+        ),
     ]
 
     batch = tags.Batch(tags_list)

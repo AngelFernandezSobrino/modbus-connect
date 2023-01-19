@@ -97,7 +97,7 @@ class Tags:
             )
 
         # Create batches
-        self.batches.append(Batch((self.tags[0], )))
+        self.batches.append(Batch((self.tags[0],)))
         for i in range(1, len(self.tags)):
             if (
                 self.tags[i].address
@@ -105,7 +105,7 @@ class Tags:
                 or self.tags[i].memorytype != self.tags[i - 1].memorytype
                 or len(self.batches[-1]) >= self.batch_size
             ):
-                self.batches.append(Batch((self.tags[i], )))
+                self.batches.append(Batch((self.tags[i],)))
 
             else:
                 self.batches[-1].append(self.tags[i])

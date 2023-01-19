@@ -38,12 +38,8 @@ def test_integration_external():
     # Configure tags
     print(gateway.connected)
     tags_list = [
-        Tag(
-            "var1", 0, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32
-        ),
-        Tag(
-            "var2", 2, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32
-        ),
+        Tag("var1", 0, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32),
+        Tag("var2", 2, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32),
     ]
 
     gateway.set_tags(tags_list)

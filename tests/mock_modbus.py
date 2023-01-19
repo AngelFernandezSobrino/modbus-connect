@@ -83,16 +83,17 @@ def run_mock_thread(port):
     import threading
     import time
 
-    thread = threading.Thread(target=start_mock_server, args=(port, ))
+    thread = threading.Thread(target=start_mock_server, args=(port,))
     thread.daemon = True
     thread.start()
     return thread
 
+
 def get_free_port():
     import socket
+
     s = socket.socket(socket.AF_INET, type=socket.SOCK_STREAM)
     s.bind(("", 0))
     port = s.getsockname()[1]
     s.close()
     return port
-

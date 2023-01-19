@@ -41,13 +41,10 @@ def tags_list() -> List[Tag]:
         Tag("var23", 44, MemoryTypes.HOLDING_REGISTERS, DataTypes.FLOAT32),
     ]
 
+
 @pytest.fixture
 def tags_list_mock() -> List[Tag]:
     return [
-        Tag(
-            "var1", 0, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32
-        ),
-        Tag(
-            "var2", 2, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32
-        ),
+        Tag("var1", 0, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32),
+        Tag("var2", 2, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32),
     ]

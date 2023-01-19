@@ -91,7 +91,7 @@ def test_read_tags(mock_modbus_server, tags_list_mock, batch_size):
     connector = connect.ModbusConnector(
         client.ModbusConfig("localhost", mock_modbus_server, 1, 1),
         batch_size=batch_size,
-        tags_dict=tags_list_mock
+        tags_dict=tags_list_mock,
     )
 
     connector.connect()

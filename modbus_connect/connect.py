@@ -65,7 +65,11 @@ class ModbusConnector:
             try:
                 values += processors.process_batch(
                     batch,
-                    self.client.get_registers(batch[0].memorytype, batch[0].address, batch.memory_length),
+                    self.client.get_registers(
+                        batch[0].memorytype,
+                        batch[0].address,
+                        batch.memory_length,
+                    ),
                     self.byte_order,
                     self.word_order,
                 )

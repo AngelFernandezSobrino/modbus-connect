@@ -1,4 +1,3 @@
-
 import pymodbus.client.tcp
 from modbus_connect import tags
 
@@ -24,9 +23,13 @@ def test_client_class_creates_correct_client():
     # Assert
 
     assert modbus_client.client is not None
-    assert isinstance(modbus_client.client, pymodbus.client.tcp.ModbusTcpClient)
+    assert isinstance(
+        modbus_client.client, pymodbus.client.tcp.ModbusTcpClient
+    )
+
 
 # Test Client class resets the client
+
 
 def test_client_class_resets_client():
     # Arrange
@@ -49,8 +52,8 @@ def test_client_class_resets_client():
 
 # Test Client class connects to the client
 
-def test_client_class_connects_to_client():
 
+def test_client_class_connects_to_client():
     # Arrange
 
     port = 10502
@@ -73,8 +76,8 @@ def test_client_class_connects_to_client():
 
 # Test client read registers from mock server
 
-def test_client_read_registers_from_mock_server():
 
+def test_client_read_registers_from_mock_server():
     # Arrange
 
     port = 10502
@@ -89,11 +92,11 @@ def test_client_read_registers_from_mock_server():
 
     # Act
 
-    result = modbus_client.get_registers(tags.MemoryTypes.HOLDING_REGISTERS, 0, 2)
+    result = modbus_client.get_registers(
+        tags.MemoryTypes.HOLDING_REGISTERS, 0, 2
+    )
 
     # Assert
 
     assert result is not None
     assert result.registers == [4, 0]
-
-
