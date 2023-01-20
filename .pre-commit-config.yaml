@@ -6,6 +6,7 @@ repos:
         entry: .pre-commit/check-tests.sh
         language: script
         pass_filenames: false
+        files: (^tests/.*|^modbus_connect/.*)
   - repo: local
     hooks:
       - id: lint
@@ -13,4 +14,3 @@ repos:
         entry: .pre-commit/check-lint.sh
         language: script
         pass_filenames: false
-
