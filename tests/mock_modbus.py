@@ -43,7 +43,6 @@ def setup_server(port):
 
 
 def run_async_server(setup):
-    print("Starting the server, port: {}".format(setup["port"]))
     address = ("", setup["port"]) if setup["port"] else None
     server = pymodbus.server.async_io.ModbusTcpServer(
         context=setup["context"],  # Data storage
@@ -75,8 +74,6 @@ def start_mock_server(port):
     loop.set_exception_handler(lambda loop, context: _logger.error(context))
     loop.create_task(server.serve_forever())
     loop.run_forever()
-
-    print("Server started", flush=True)
 
 
 def run_mock_thread(port):

@@ -1,69 +1,32 @@
-# Integration test towards external modbus server
-#
-# This test checks that the modbus gateway can connect to an external modbus server and parse the data correctly
-#
+import logging
 
-import time
-import pytest
-
-import pymodbus.constants
-
+from modbus_connect import client
 import modbus_connect.connect as connect
-import modbus_connect.tags as tags
 from modbus_connect.tags import Tag, MemoryTypes, DataTypes
-
-import tests.mock_modbus
 
 
 def test_integration_external():
     # Arrange
 
-    # Create modbus server mock
+    connector = connect.ModbusConnector(
+        client.ModbusConfig("docencia.i4techlab.upc.edu", 20000, 1, 1),
+        tags_dict=[
+            Tag("var1", 0, MemoryTypes.HOLDING_REGISTERS, DataTypes.FLOAT32),
+            Tag("var2", 2, MemoryTypes.HOLDING_REGISTERS, DataTypes.FLOAT32),
+        ],
+    )
 
-    thread = tests.mock_modbus.run_mock_thread()
-
-    # Create modbus gateway
-
-    gateway = connect.ModbusConnector("localhost", 5020)
-
-    try:
-        while not gateway.connected:
-            print("Trying to connect...")
-            time.sleep(1)
-            gateway.connect()
-
-    except Exception as e:
-        print(e)
-
-    # Configure tags
-    print(gateway.connected)
-    tags_list = [
-        Tag("var1", 0, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32),
-        Tag("var2", 2, MemoryTypes.HOLDING_REGISTERS, DataTypes.INT32),
-    ]
-
-    gateway.set_tags(tags_list)
+    connector.connect()
 
     # Act
 
-    results = None
+    results = connector.read_tags()
 
-    # Read tags
-    try:
-        results = gateway.read_tags()
-    except Exception as e:
-        print(e)
     # Assert
 
-    # Check results
-
     assert len(results) == 2
-
     assert results[0].tag.name == "var1"
     assert results[0].tag.address == 0
-    assert results[0].tag.datatype == DataTypes.INT32
-    assert results[0].value == 4
-
-    # Cleanup
-
-    # No cleanup needed
+    assert results[0].tag.datatype == DataTypes.FLOAT32
+    assert results[0].value != 0
+    assert results[0].value > -10 and results[0].value < 10
