@@ -30,6 +30,7 @@ safety = "^2.3.5"
 
 [tool.poe.tasks]
 tests = "poetry run pytest"
+tests-cov = "poetry run pytest --cov=modbus_connect --cov-report=term"
 lint = "poetry run black ./modbus_connect/* ./tests/*"
 
 [tool.black]
