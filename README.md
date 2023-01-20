@@ -1,9 +1,15 @@
 # Modbus Connect package for Python
 
-<a href="https://angelfernandezsobrino.github.io/modbus-connect/reports/tests/3.11.html" alt="Tests">
+## Main branch info 
+
+<a href="https://github.com/AngelFernandezSobrino/modbus-connect/actions/workflows/continuous-integration.yml" alt="CI-status">
+    <img src="https://github.com/AngelFernandezSobrino/modbus-connect/actions/workflows/continuous-integration.yml/badge.svg?branch=master">
+
+## Latest release info
+<a href="https://angelfernandezsobrino.github.io/modbus-connect/reports/tests/3.11.html" alt="Tests-latests-3.11">
     <img src="https://angelfernandezsobrino.github.io/modbus-connect/badges/tests/3.11.svg">
 </a>
-<a href="https://angelfernandezsobrino.github.io/modbus-connect/reports/coverage/3.11/index.html" alt="Tests">
+<a href="https://angelfernandezsobrino.github.io/modbus-connect/reports/coverage/3.11/index.html" alt="Coverage-latests-3.11">
     <img src="https://angelfernandezsobrino.github.io/modbus-connect/badges/coverage/3.11.svg">
 </a>
 
